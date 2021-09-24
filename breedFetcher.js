@@ -1,8 +1,11 @@
 // Require(s)
 const request = require('request');
+const { getArguments } = require('./getArguments');
 
 // API endpoint/URL with 'sib' passed as the search query
-const URL = "https://api.thecatapi.com/v1/breeds/search?q=sib";
+let URL = 'https://api.thecatapi.com/v1/breeds/search?q=';
+const { breedName } = getArguments();
+URL += breedName;
 
 // Fetch data from URL
 request(URL, (error, response, body) => {
