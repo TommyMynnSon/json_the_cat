@@ -1,18 +1,11 @@
 // Require(s)
 const request = require('request');
-const { getArguments } = require('./getArguments');
 
-// Fetch data from URL
+// Fetch data from URL and pass it to the provided callback function
 const fetchBreedDescription = (breedName, callback) => {
-  // API endpoint/URL with value of breedName passed as the search query
-  let URL = 'https://api.thecatapi.com/v1/breeds/search?q=';
-  const { breedName } = getArguments();
-  URL += breedName;
+  const URL = 'https://api.thecatapi.com/v1/breeds/search?q=' + breedName;
 
   request(URL, (error, response, body) => {
-    if (error) {
-      console.log('error:', error);
-    }
 
     const data = JSON.parse(body);
 
@@ -21,6 +14,10 @@ const fetchBreedDescription = (breedName, callback) => {
       process.exit();
     }
 
-    console.log(data[0].description);
+    callback(error, data[0].description);
   });
-}
+};
+
+module.exports = {
+  fetchBreedDescription
+};
