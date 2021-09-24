@@ -15,5 +15,10 @@ request(URL, (error, response, body) => {
 
   const data = JSON.parse(body);
 
+  if (data.length === 0) {
+    console.log(`Search query for breed '${breedName}' not found!`);
+    process.exit();
+  }
+
   console.log(data[0].description);
 });
